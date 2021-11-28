@@ -19,7 +19,15 @@ function cheatsheetById({ cheatsheet }) {
       {
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-10">
           {cheatsheet.codes.map((code) => {
-            return <Card key={code._id} title={code.title} code={code.body} />;
+            return (
+              <Card
+                codeId={code._id}
+                cheatsheetId={cheatsheet._id}
+                key={code._id}
+                title={code.title}
+                code={code.body}
+              />
+            );
           })}
         </div>
       }

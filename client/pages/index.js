@@ -2,7 +2,7 @@ import Button from "../components/Button";
 import Link from "next/link";
 import { parseCookies, destroyCookie } from "nookies";
 
-function index({ loggedIn }) {
+function index() {
   return (
     <section>
       <h1 className="lg:text-7xl md:text-5xl text-4xl mt-20 mb-5 text-center font-display">
@@ -15,22 +15,14 @@ function index({ loggedIn }) {
         difficult syntax.
       </p>
 
-      {!loggedIn ? (
-        <div className="grid sm:grid-cols-2 lg:w-80 md:w-96 sm:w-4/6 mx-auto grid-cols-1 gap-5">
-          <Link href="/register">
-            <Button type="primary" text="register" />
-          </Link>
-          <Link href="/login">
-            <Button type="secondary" text="login" />
-          </Link>
-        </div>
-      ) : (
-        <div className="text-center">
-          <Link href="/cheatsheet">
-            <Button type="secondary" text="My Cheatsheet" />
-          </Link>
-        </div>
-      )}
+      <div className="grid sm:grid-cols-2 lg:w-80 md:w-96 sm:w-4/6 mx-auto grid-cols-1 gap-5">
+        <Link href="/register">
+          <Button type="primary" text="register" />
+        </Link>
+        <Link href="/login">
+          <Button type="secondary" text="login" />
+        </Link>
+      </div>
     </section>
   );
 }
@@ -38,7 +30,6 @@ function index({ loggedIn }) {
 export default index;
 
 export const getServerSideProps = async (context) => {
-  let loggedIn = false;
   const cookies = parseCookies(context);
   const token = cookies.token;
 
@@ -49,12 +40,17 @@ export const getServerSideProps = async (context) => {
       },
     });
     if (response.status === 200) {
-      loggedIn = true;
+      return {
+        redirect: {
+          permanent: false,
+          destination: "/cheatsheet",
+        },
+      };
     } else if (response.status === 401 || response.status === 403) {
       destroyCookie(context, "token");
     }
   }
   return {
-    props: { loggedIn },
+    props: {},
   };
 };

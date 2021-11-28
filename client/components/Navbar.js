@@ -30,7 +30,7 @@ function Navbar({}) {
         dark:bg-secondary dark:text-white"
     >
       <Link href="/">
-        <h3 className="font-display dark:text-white text-2xl">
+        <h3 className="font-display cursor-pointer text-gray-800 dark:text-white text-2xl">
           <span className="text-primary">Q</span>Code
         </h3>
       </Link>

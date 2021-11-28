@@ -1,8 +1,13 @@
-import { MdOutlineContentCopy, MdOutlineMoreVert } from "react-icons/md";
+import {
+  MdOutlineContentCopy,
+  MdOutlineDelete,
+  MdOutlineEdit,
+} from "react-icons/md";
 import { useEffect } from "react";
 import hljs from "highlight.js";
 import { toast } from "react-toastify";
-function Card({ code, title }) {
+import router from "next/router";
+function Card({ code, title, codeId, cheatsheetId }) {
   useEffect(() => {
     hljs.highlightAll();
   }, []);
@@ -23,13 +28,14 @@ function Card({ code, title }) {
           <MdOutlineContentCopy
             onClick={copyToClipBoard}
             size="24"
-            className="cursor-pointer mr-5"
+            className="cursor-pointer mr-5 text-primary"
           />
-          <MdOutlineMoreVert size="24" className="cursor-pointer" />
-          {/* <div className="depth-shadow w-24  p-4 rounded-md border  top-8 right-0 absolute bg-white">
-            <button className="mb-2 hover:text-primary">Edit</button>
-            <button className=" hover:text-primary">Delete</button>
-          </div> */}
+          <MdOutlineEdit
+            onClick={() => router.push(`update-code/${cheatsheetId}/${codeId}`)}
+            size="24"
+            className="cursor-pointer mr-5 text-blue-500"
+          />
+          <MdOutlineDelete size="24" className="cursor-pointer text-red-500" />
         </div>
       </div>
       <pre className="mt-4 lg:max-h-64 max-h-56 overflow-scroll">

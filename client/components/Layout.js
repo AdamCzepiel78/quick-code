@@ -8,7 +8,7 @@ function Layout({ children }) {
   return (
     <ThemeProvider attribute="class">
       <Navbar />
-      <main className="lg:px-12 z-0 dark:bg-secondary  dark:text-white px-5 py-5 min-h-screen">
+      <main className="lg:px-12 z-0 dark:bg-secondary text-gray-800  dark:text-white px-5 py-5 min-h-screen">
         <h1>{theme}</h1>
         {children}
       </main>
