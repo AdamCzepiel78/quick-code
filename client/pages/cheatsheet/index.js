@@ -1,11 +1,19 @@
 import Heading from "../../components/Heading";
 import Link from "next/link";
 import { parseCookies, destroyCookie } from "nookies";
-import { MdMore, MdMoreVert } from "react-icons/md";
+import { MdAddBox } from "react-icons/md";
 
 function cheatsheet({ cheatsheets }) {
   return (
-    <section>
+    <section className="relative">
+      <Link href="/create-cheatsheet">
+        <MdAddBox
+          style={{ top: "-10px" }}
+          size="38"
+          className="text-primary  cursor-pointer absolute z-0 right-0"
+        />
+      </Link>
+
       <Heading title="Cheat sheats" subTitle="Your" />
 
       {cheatsheets.length <= 0 ? (
@@ -17,7 +25,7 @@ function cheatsheet({ cheatsheets }) {
           {cheatsheets.map((cheatsheet) => {
             return (
               <Link key={cheatsheet._id} href={`cheatsheet/${cheatsheet._id}`}>
-                <div className="border-2 hover:scale-105 transform transition-all shadow-lg dark:border-primary border-gray-50 p-10 h-60 w-full cursor-pointe uppercase text-center font-display text-3xl grid place-items-center rounded-xl">
+                <div className="border-2 hover:scale-105 cursor-pointer transform transition-all shadow-lg dark:border-primary border-gray-50 p-10 h-60 w-full cursor-pointe uppercase text-center font-display text-3xl grid place-items-center rounded-xl">
                   {cheatsheet.name}
                 </div>
               </Link>

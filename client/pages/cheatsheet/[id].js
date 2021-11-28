@@ -1,10 +1,49 @@
 import Card from "../../components/Card";
 import Heading from "../../components/Heading";
 import { parseCookies, destroyCookie } from "nookies";
-import { MdAddBox } from "react-icons/md";
+import { MdAddBox, MdDelete } from "react-icons/md";
 import router from "next/router";
+import { toast } from "react-toastify";
 
 function cheatsheetById({ cheatsheet }) {
+  const deleteCheatsheet = async () => {
+    // getting cookies
+    const cookies = parseCookies();
+
+    // creating cheatsheet
+    const res = await fetch(
+      `http://localhost:8000/api/cheatsheet/${cheatsheet._id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${cookies.token}`,
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    // cheking for errors
+    if (res.status === 400) {
+      toast(data.error, {
+        position: "top-center",
+        type: "error",
+      });
+
+      return;
+    }
+
+    // deleted succesfully
+    if (res.status === 200) {
+      toast(`Cheatsheet Deleted Successfully`, {
+        position: "top-center",
+        type: "success",
+      });
+    }
+
+    router.push("/cheatsheet");
+  };
+
   return (
     <section className="relative">
       <MdAddBox
@@ -13,7 +52,13 @@ function cheatsheetById({ cheatsheet }) {
         onClick={() => {
           router.push(`/add-code/${cheatsheet._id}`);
         }}
-        className="text-primary cursor-pointer absolute z-0 right-0"
+        className="text-primary cursor-pointer absolute z-0 right-14"
+      />
+      <MdDelete
+        onClick={deleteCheatsheet}
+        style={{ top: "-10px" }}
+        size="38"
+        className="text-red-500  cursor-pointer absolute z-0 right-0"
       />
       <Heading subTitle="collection of" title={cheatsheet.name} />
       {

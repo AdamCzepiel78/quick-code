@@ -1,11 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
-import {
-  MdMenu,
-  MdOutlineClose,
-  MdDarkMode,
-  MdLightMode,
-} from "react-icons/md";
+import { MdLogout, MdDarkMode, MdLightMode } from "react-icons/md";
 import { parseCookies } from "nookies";
 import { useRouter } from "next/router";
 import JsCookie from "js-cookie";
@@ -34,7 +29,6 @@ function Navbar({}) {
           <span className="text-primary">Q</span>Code
         </h3>
       </Link>
-
       <div className="flex items-center">
         {theme === "light" ? (
           <MdDarkMode
@@ -49,14 +43,26 @@ function Navbar({}) {
             size="25"
           />
         )}
+
         {token && (
+          <MdLogout
+            size="25"
+            onClick={() => {
+              JsCookie.remove("token");
+              router.replace("/");
+            }}
+            className="cursor-pointer ml-5 hover:text-primary"
+          />
+        )}
+      </div>
+      {/* {token && (
           <MdMenu
             className="cursor-pointer ml-5"
             onClick={() => setShowMenu(true)}
             size="25"
           />
         )}
-      </div>
+     
 
       {showMenu && (
         <ul className="fixed z-50 bg-white dark:bg-secondary border shadow-lg rounded-md lg:right-12 right-3 top-0 mt-5  px-10 py-5">
@@ -92,8 +98,8 @@ function Navbar({}) {
             size="24"
             className="absolute top-3 right-3 cursor-pointer"
           />
-        </ul>
-      )}
+        </ul> */}
+      {/* )} */}
     </nav>
   );
 }

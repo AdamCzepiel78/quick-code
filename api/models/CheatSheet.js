@@ -9,7 +9,7 @@ const cheatSheetSchema = new mongoose.Schema(
   {
     name: {
       ...requiredString,
-      minLength: 3,
+      minLength: 2,
     },
     description: {
       ...requiredString,
